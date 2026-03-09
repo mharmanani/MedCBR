@@ -1,0 +1,384 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="description" content="A concept-based reasoning framework that integrates clinical guidelines with vision–language and reasoning models for interpretable medical image analysis.">
+    <meta name="keywords" content="Vision-Language Models, Large Language Models, Medical Reasoning, Multimodal AI, Cancer Detection, Machine Learning, Radiology, Clinical Guidelines, Concept Bottleneck Models, Explainable AI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MedCBR: Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" alt="MedCBR Logo" href="assets/medcbr_logo.png" type="image/png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/data.js"></script>
+    <script src="./static/js/index.js"></script>
+  <style type="text/css" id="country-flag-fixer-ext-head">
+  @font-face {
+    font-family: "Twemoji Country Flags";
+    font-style: normal;
+    src: url('chrome-extension://jhcpefjbhmbkgjgipkhndplfbhdecijh/assets/TwemojiCountryFlags.woff2') format('woff2');
+    unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+  }
+
+  @font-face {
+    font-family: "Twemoji Country Flags";
+    font-style: italic; /* Defined to prevent italic styled flags */
+    src: url('chrome-extension://jhcpefjbhmbkgjgipkhndplfbhdecijh/assets/TwemojiCountryFlags.woff2') format('woff2');
+    unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+  }
+</style><style type="text/css" id="country-flag-fixer-ext">body, button, input, optgroup, select, textarea { font-family: 'Twemoji Country Flags', BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
+code, pre { font-family: 'Twemoji Country Flags', monospace !important; }
+.is-family-primary { font-family: 'Twemoji Country Flags', BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
+.is-family-secondary { font-family: 'Twemoji Country Flags', BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
+.is-family-sans-serif { font-family: 'Twemoji Country Flags', BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
+.is-family-monospace { font-family: 'Twemoji Country Flags', monospace !important; }
+.is-family-code { font-family: 'Twemoji Country Flags', monospace !important; }
+body { font-family: 'Twemoji Country Flags', "Noto Sans", sans-serif !important; }
+.teaser { font-family: 'Twemoji Country Flags', "Google Sans", sans-serif !important; }
+.publication-title { font-family: 'Twemoji Country Flags', "Google Sans", sans-serif !important; }
+.publication-authors { font-family: 'Twemoji Country Flags', "Google Sans", sans-serif !important; }
+</style></head>
+  <body>
+    <div id="content">
+      <section class="hero">
+        <div class="hero-body">
+          <div class="container is-max-desktop">
+            <div class="columns is-centered">
+              <div class="column has-text-centered">
+                <div class="has-text-centered" style="width: 100%; text-align: center !important; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center;">
+                  <span style="font-size: 3rem; margin-right: 10px; line-height: 1;">
+                    <img src="assets/medcbr_logo.png" alt="MedCBR Logo" style="width: 60px; height: 60px; object-fit: contain;">
+                  </span>
+                  <h1 class="title is-1 publication-title" style="margin: 0; line-height: 1.2; color: #1e81ce;">MedCBR</h1>
+                </div>
+                <h1 class="title is-2 publication-title">Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning</h1>
+                
+                <div class="is-size-5 publication-authors">
+                  <!-- Paper authors -->
+                    <span class="author-block">
+                      <a href="https://harmanani.com" target="_blank">Mohamed Harmanani</a><sup>1,4</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="https://www.linkedin.com/in/bininglong/" target="_blank">Bining Long</a><sup>1*</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="mailto:24b8@queensu.ca" target="_blank">Zhuoxin Guo</a><sup>1,4*</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="https://www.linkedin.com/in/paul-wilson-832313179/" target="_blank">Paul FR Wilson</a><sup>1,4</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="https://www.linkedin.com/in/amirhossein-sabour/" target="_blank">Amirhossein Sabour</a><sup>3</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="https://minhto2802.github.io/" target="_blank">Minh Nguyen Nhat To</a><sup>2,4</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="" target="_blank">Gabor Fichtinger</a><sup>1</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="" target="_blank">Purang Abolmaesumi</a><sup>2†</sup>,&nbsp;
+                    </span>
+                    <span class="author-block">
+                      <a href="https://www.vectorinstitute.ai/team/parvin-mousavi" target="_blank">Parvin Mousavi</a><sup>1,4†</sup>
+                    </span>
+                </div>
+
+                <div class="is-size-5 publication-authors" style="margin-top:15px;">
+                    <span class="author-block" style="display: inline-block; margin: 5px 15px; vertical-align: top;">
+                      <sup>1</sup>
+                      Queen's University
+                          <img src="static/images/logos/queensu.png" alt="University of Toronto" style="width:40px;height:40px;margin-left:8px;vertical-align:middle;object-fit:contain;">
+                                            </span>
+                    <span class="author-block" style="display: inline-block; margin: 5px 15px; vertical-align: top;">
+                      <sup>2</sup>
+                      University of British Columbia
+                          <img src="static/images/logos/ubc.png" alt="University of British Columbia" style="width:40px;height:40px;margin-left:8px;vertical-align:middle;object-fit:contain;">
+                                            </span>
+                    <span class="author-block" style="display: inline-block; margin: 5px 15px; vertical-align: top;">
+                      <sup>3</sup>
+                      McMaster University
+                          <img src="static/images/logos/mcmaster.png" alt="McMaster University" style="width:50px;height:40px;margin-left:8px;vertical-align:middle;object-fit:contain;">
+                    </span>
+                    <span class="author-block" style="display: inline-block; margin: 5px 15px; vertical-align: top;">
+                      <sup>4</sup>
+                      Vector Institute
+                          <img src="static/images/logos/vector.png" alt="Vector Institute" style="width:32px;height:32px;margin-left:8px;vertical-align:middle;object-fit:contain;">
+                    </span>
+                </div>
+
+                <div class="author-notes" style="margin-top:15px;">
+                  <p><sup>*</sup> Equal Contribution.&nbsp;&nbsp;&nbsp;<sup>†</sup> Equal Advising.</p>
+                </div>
+
+                <div class="column has-text-centered" style="margin-top: 5px;">
+                  <div class="publication-links">
+                      <span class="link-block">
+                        <a href="https://arxiv.org/abs/xxxx.xxxxx" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="ai ai-arxiv"></i>
+                          </span>
+                          <span>Paper</span>
+                        </a>
+                      </span>
+                      <span class="link-block">
+                        <a href="https://github.com/mharmanani/medcbr" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                          <span class="icon">
+                              <i class="fab fa-github"></i>
+                          </span>
+                          <span>Code</span>
+                        </a>
+                      </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="is-centered has-text-centered" style="margin-bottom: 0.5rem; margin-top: -1.5rem; font-weight: bold; font-size: 1rem; ">
+          To appear in <a href="https://cvpr2026.thecvf.com/" target="_blank" style="color: #1B427D;">Findings of CVPR 2026</a>
+        </div>
+        <img src="assets/cvpr_logo.svg" alt="CVPR 2026" style="display: block; margin: 0 auto; width: 211px; height: auto;">
+      </section>
+
+      <section class="section" style="padding-top: 2.5rem;">
+        <div class="container is-max-desktop">
+          <!-- Abstract. -->
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+              <h2 class="title is-3">Abstract</h2>
+              <div class="content has-text-justified">
+                <p>
+                  Concept Bottleneck Models (CBMs) are a prominent framework for interpretable AI that map learned visual features onto a set of meaningful concepts, to be used for task-specific downstream predictions. Their sequential structure enhances transparency by connecting model predictions to the underlying concepts that support them. In medical imaging, where transparency is essential, CBMs offer an appealing foundation for explainable model design. However, their discrete concept representations overlook broader clinical context such as diagnostic guidelines and expert heuristics, reducing reliability in complex cases. We propose MedCBR, a concept-based reasoning framework that integrates clinical guidelines with vision–language and reasoning models. Labeled clinical descriptors are transformed into guideline-conformant text, and a concept-based model is trained with a multi-task objective combining multi-modal contrastive alignment, concept supervision, and diagnostic classification to jointly ground image features, concepts, and pathology. A reasoning model then converts these predictions into structured clinical narratives that explain the diagnosis, emulating expert reasoning based on established guidelines. MedCBR achieves superior diagnostic and concept-level performance, with AUROCs of 94.2\% on ultrasound and 84.0\% on mammography. Further experiments were also performed on non-medical datasets, with 86.1\% accuracy. Our framework enhances interpretability and forms an end-to-end bridge from medical image analysis to decision-making.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--/ Abstract. -->
+          <div class="publication-image" style="display: flex; justify-content: space-around;">
+            <img src="assets/graphabs.png" alt="Graphical Abstract" style="max-width: 45%; height: auto;">
+          </div>
+
+          <div class="publication-caption">
+            <p style="font-style: italic; text-align: center; margin-top: 0.5rem;">
+              <b>MedCBR:</b> We frame interpretable medical image analysis as reasoning over diverse sources of evidence, <br>including model predictions and clinical guidelines.
+            </p>
+            
+          </div>
+
+          <!-- Key contributions. -->
+            <div class="columns is-centered has-text-centered" style="margin-top: 3rem;">
+              <div class="column is-four-fifths">
+                <h2 class="title is-3">Key Contributions</h2>
+                <div class="content has-text-justified">
+                  <ul>
+                      <li>A <b>clinician-facing reasoning module</b> generates structured diagnostic narratives by integrating clinical guidelines with the predictions of a concept-based model to emulate the reasoning process used by clinicians, and produce transparent explanations of its predictions.</li>
+                      <li>A new <b>concept enrichment strategy</b> that mitigates noise and incompleteness in human-annotated concepts by leveraging a large vision–language model (LVLM) to generate structured reports conditioned on the image, the concept ground truths, and the guideline. These enriched textual representations capture the contextual and relational meaning of visual findings, providing stronger and more consistent supervision.</li>
+                      <li>A <b>multi-task vision–language concept model</b> that contrastively aligns images with the LVLM-enriched reports while jointly optimizing for concept and diagnosis prediction. This formulation encourages the vision encoder to learn clinically meaningful representations.</li>
+                       within a shared embedding space. Models trained under this strategy demonstrate improved generalization and higher diagnostic performance across multiple benchmarks.</li>
+                      <li>Improved performance and interpretability on two breast cancer detection benchmarks, outperforming both standard CBMs and end-to-end vision–language models.</li> 
+                  </ul>
+                </div>
+              </div>
+            </div>
+          <!--/ Key contributions. -->
+        </div>
+      </section>
+
+      <!-- Architecture. -->
+        <section class="section">
+          <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                <h2 class="title is-3">Model Architecture</h2>
+                  <div class="publication-image">
+                    <img src="assets/mainfig.png" alt="Architecture">
+                  </div>
+              </div>
+            </div>
+
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <div class="content has-text-justified">
+                    <p>
+                      <b>MedCBR</b> integrates clinical knowledge, vision-language alignment, and reasoning for interpretable cancer detection.
+                      <ul>
+                        <li>(a) A large vision-language model (LVLM) generates guideline-conformant reports from input images and coarse concept annotations.</li>
+                        <li>(b) A multi-task concept-based model is trained to align image features with the LVLM-generated reports while jointly optimizing for concept and diagnosis prediction. This encourages the vision encoder to learn clinically meaningful representations.</li>
+                        <li>(c) A reasoning module integrates the model's predictions with clinical guidelines to generate structured diagnostic narratives that explain the diagnosis.</li>
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </section>
+      <!--/ Architecture. -->
+
+      <!-- Experiments. -->
+        <section class="section">
+          <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                <h2 class="title is-3">Results</h2>
+                  <div class="publication-image">
+                    <img src="assets/diagnosis.png" alt="Results">
+                  </div>
+              </div>
+            </div>
+
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <div class="content has-text-justified">
+                    <p>
+                      MedCBR is evaluated on 3 datasets: breast ultrasound (BUS-BRA), mammography (CBIS-DDSM), and natural images (CUB-200). 
+                      On all 3 datasets, MedCBR outperforms standard CBMs by a wide margin (+7.9% avg improvement), and competes with end-to-end SOTA VLMs such as LAION-2B CLIP and SigLIP.  
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                  <div class="publication-image">
+                    <img src="assets/clinical.png" alt="Clinical Utility">
+                  </div>
+              </div>
+            </div>
+
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                  <div class="content has-text-justified">
+                    <p>
+                      MedCBR achieves the highest overall clinical utility on both BUS-BRA and CBIS-DDSM, attaining the best F1 while maintaining high sensitivity and specificity. Compared to radiologists, MedCBR achieves markedly higher specificity on both datasets, indicating fewer false positives, and it also attains the highest sensitivity among the VLM baselines.
+                    </p>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      <!--/ Experiments. -->
+
+      <!-- Case Study. -->
+        <section class="section">
+          <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                <h2 class="title is-3">Qualitative Analysis</h2>
+                  <div class="publication-image">
+                    <img src="assets/medreasoning.png" alt="Qualitative Analysis">
+                  </div>
+              </div>
+            </div>
+
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <div class="content has-text-justified">
+                    <p>
+                      MedCBR produces coherent reasoning and decision patterns that mirror how radiologists weigh conflicting evidence, correctly interpreting malignant-leaning descriptors and linking them to plausible pathological correlates such as invasive growth. 
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <div class="content has-text-justified">
+                    <img src="assets/birb.png" alt="Case Study" style="max-width: 55%; height: auto; display: block; margin: 0 auto;">
+                  </div>
+                </div>
+              </div>
+
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <div class="content has-text-justified">
+                    <p>
+                      MedCBR can be extended to natural image reasoning tasks. In this example, the model explains the presence of a Blue Jay in the image through the integration of key diagnostic features such as the bird's blue coloration, crest, and distinctive markings. Conflicting cues are highlighted in orange.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+        </section>
+      <!--/ Qualitative Analysis. -->
+
+      <!-- Conclusion. -->
+        <section class="section">
+          <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                <h2 class="title is-3">Conclusion</h2>
+              </div>
+            </div>
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-four-fifths">
+                <div class="content has-text-justified">
+                  <p>
+                    We present MedCBR, a concept-based reasoning framework that integrates clinical guidelines with vision–language and reasoning models for interpretable medical image analysis. By enriching concept supervision with LVLM-generated reports and employing a reasoning module to generate structured diagnostic narratives, MedCBR achieves superior diagnostic performance while providing transparent explanations of its predictions. Our framework demonstrates the potential of combining clinical knowledge with advanced AI techniques to enhance interpretability and reliability in medical image analysis, paving the way for more trustworthy and clinically useful AI systems.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      <!--/ Conclusion. -->
+
+      <!-- BibTeX. -->
+      <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+          <h2 class="title">BibTeX</h2>
+          <pre><code>@inproceedings{harmanani2025vision,
+      title={Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning},
+      author={Harmanani, Mohamed and Long, Bining and Guo, Zhuoxin and Wilson, Paul FR and Sabour, Amirhossein and To, Minh Nguyen Nhat and Fichtinger, Gabor and Abolmaesumi, Purang and Mousavi, Parvin},
+      year={2026},
+      booktitle ={Findings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+}</code></pre>
+        </div>
+      </section>
+      <!--/ BibTeX. -->
+
+      <!-- Footer. -->
+      <footer class="footer">
+        <div class="container">
+          <div class="content has-text-centered">
+            <span style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <img src="assets/footer/queensu_logo.png" style="height: 85px; object-fit: contain;">
+              <img src="assets/footer/ubc_logo.png" style="height: 65px; object-fit: contain;">
+              <img src="assets/footer/vector_logo.png" style="height: 75px; object-fit: contain;">
+            </span>
+          </div>
+          <div class="columns is-centered">
+            <div class="column is-8">
+              <div class="content">
+                <p>
+                  This page was built using the
+                  <a href="https://github.com/tonyh2021/papers" target="_blank">Papers</a>
+                  which was inspired by the
+                  <a href="https://nerfies.github.io/" target="_blank">Nerfies</a>. You are free to borrow the of this website, we
+                  just ask that you link back to this page in the footer.
+                </p>
+                <p>
+                  This website is licensed under a
+                  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International
+                    License</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+</body></html>
