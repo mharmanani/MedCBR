@@ -335,9 +335,42 @@ body {
   color: white !important;
 }*/
 
+.footer-logo-1 {
+    height: 85px;
+    object-fit: contain;
+}
+.footer-logo-2 {
+    height: 75px;
+    object-fit: contain;
+}
+.footer-logo-3 {
+    height: 65px;
+    object-fit: contain;
+}
+
+#graph-abs {
+    max-width: 45%;
+    height: auto;
+}
+
 /* / small sceen */
 @media screen and (max-width: 768px) {
   figure > picture > img {
     display: none;
+  }
+
+  .footer-logo-1 {
+    height: 65px;
+  }
+  .footer-logo-2 {
+    height: 55px;
+  }
+  .footer-logo-3 {
+    height: 45px;
+  }
+
+  #graph-abs {
+    max-width: 90%;
+    height: auto;
   }
 }
