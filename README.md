@@ -1,4 +1,4 @@
-<img src=".img/medCBR_logo_wide.png">
+<img src=".img/medCBR_logo_wide.png" width="50%">
 
 # Vision-Language Models Encode Clinical Guidelines for Concept-Based Reasoning in Medical Image Analysis
 
@@ -8,7 +8,7 @@ Concept Bottleneck Models (CBMs) are a prominent framework for interpretable AI 
 ---
 
 ###  Dataset setup
-##### BBUSBRA & BrEaST
+##### BUSBRA & BrEaST
 1. Download both datasets
 2. Move the images into the correct directory
 3. Preprocess the data by cropping to lesion ROIs
