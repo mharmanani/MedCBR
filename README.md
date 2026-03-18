@@ -1,4 +1,6 @@
-<img src=".img/medCBR_logo_wide.png" width="50%">
+<div align="center">
+    <img src=".img/medCBR_logo_wide.png" width="50%">
+</div>
 
 # Vision-Language Models Encode Clinical Guidelines for Concept-Based Reasoning in Medical Image Analysis
 
