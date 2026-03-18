@@ -1,0 +1,91 @@
+seed: 0
+debug: false
+
+mode: reasoning
+exp_name: ${backbone}-bus
+checkpoint_dir: /home/harmanan/scratch/ckpt/${data.dataset}/${mode}_fold=${data.fold}_j${slurm_job_id}
+save_weights: false
+
+pretrained: false
+pretraining:
+  data: breast
+  style: supervised
+
+from_ckpt: /h/harmanan/breast_us/_checkpoint/${backbone}-${pretraining.data}-${pretraining.style}/fold${data.fold}.pth
+
+wandb:
+  name: ${exp_name}_fold=${data.fold}_slurmid=${slurm_job_id}
+  project: MedCBM
+  group: reasoning
+  tags: 
+  log_images: true
+
+slurm:
+  qos: long
+  mem: 48G
+  gpu: gpu:a40:1
+  time: 48:00:00
+
+data:
+  dataset: DDSM
+  data_dir: /h/harmanan/breast_us/data/${data.dataset}
+  fold: 0
+  num_folds: 5
+  splitting: kfold_patients
+  sampling: undersample
+  sampling_ratio: 1.0
+  crop_rois: false
+  use_llm_output: true
+  image_size: 224
+
+  batch_size: 1
+  augmentations:
+    - translation
+
+  datasets: ["BrEaST", "BUSBRA"] # datasets to use, can be ["BrEaST", "BUSBRA", "ALL"]
+
+training:
+  num_epochs: 1
+  lr_scheduler: cosine
+  pretrained: true
+  from_ckpt: null
+  accumulate_grad_steps: 1
+
+optimizer:
+  name: adamw
+  encoder_lr: 1e-05
+  main_lr: 1e-05
+  wd: 1e-4 # weight decay
+  encoder_frozen_epochs: 0
+  encoder_warmup_epochs: 0
+  main_frozen_epochs: 0
+  main_warmup_epochs: 0
+
+backbone: qwen
+num_classes: 2
+
+llama:
+  prompt_mode: guidelines
+  include_mask: false
+  include_bbox: false
+
+concept_model: 
+  cfg: /home/harmanan/projects/aip-medilab/harmanan/breast_us/config/ddsm/ours_clip_vit_l.yaml
+  ckpt: /home/harmanan/projects/aip-medilab/harmanan/breast_us/.model-weights/${data.dataset}/medcbr/fold${data.fold}.pth
+  name: MedCBR
+
+cbm:
+  num_concepts: 30
+  num_classes: 2
+  num_birads: 4
+  concepts: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+  concept_weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] 
+  architecture: multitask # bottleneck, multitask, fusion
+
+learning_rate: 0.001
+loss: cross_entropy
+
+device: cuda
+use_amp: false
+
+# python3 run.py -y llama -o wandb.group=LLaMA_LaBo_1 data.fold=0

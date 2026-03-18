@@ -1,0 +1,92 @@
+seed: 0
+debug: false
+
+mode: clip
+exp_name: clip
+checkpoint_dir: /home/harmanan/scratch/ckpt/${data.dataset}/${mode}_fold=${data.fold}_j${slurm_job_id}
+save_weights: false
+#checkpoint_dir: null #/h/harmanan/breast_us/.ckpt/${slurm_job_id}
+
+pretrained: true
+pretraining:
+  data: breast
+  style: clip
+from_ckpt: null # /h/harmanan/breast_us/_checkpoint/biomedclip-${pretraining.data}/model_pureclip1.pth
+
+wandb:
+  name: ${exp_name}_fold=${data.fold}_slurmid=${slurm_job_id}
+  project: MedCBM
+  group: biomedclip
+  tags: 
+  log_images: false
+
+slurm:
+  qos: m2
+  mem: 32G
+  gpu: gpu:a40:1
+  time: 8:00:00
+
+data:
+  dataset: DDSM
+  data_dir: /h/harmanan/breast_us/data/${data.dataset}
+  fold: 0
+  num_folds: 5
+  splitting: kfold_patients
+  sampling: undersample
+  sampling_ratio: 1.0
+  crop_rois: true # whether to crop the images to the ROIs
+  image_size: 224
+
+  batch_size: 24
+  augmentations:
+    - translation
+    - rotate
+    - flip
+
+  subset_train_data: 1.0
+  use_llm_output: true
+  datasets: ["BUSBRA"]
+
+training:
+  num_epochs: 300
+  lr_scheduler: cosine
+  pretrained: false
+  from_ckpt: /checkpoint/harmanan/16902799/model_epoch299_auc0.55.ckpt
+  accumulate_grad_steps: 1
+
+optimizer:
+  name: adamw
+  lr: 1e-05
+  wd: 0 # weight decay
+  frozen_epochs: 0
+  warmup_epochs: 10
+
+cbm:
+  num_concepts: 30
+  num_classes: 2
+  num_birads: 4
+  concepts: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+  concept_weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] 
+  architecture: bottleneck
+
+loss:
+  det_loss: ce
+  concept_loss: ce
+  birads_loss: ce
+
+clip:
+  d: 768
+  embedding_dim: 768
+  adapter_dim: 768
+  clip_weight: 0.0
+  det_weight: 1.06
+  concept_weight: 0.94
+  use_llm_output: false
+  backbone: vit-l
+
+metrics:
+  tune_threshold: true
+
+
+device: cuda
+use_amp: false

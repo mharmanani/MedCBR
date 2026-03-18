@@ -1,0 +1,87 @@
+seed: 0
+debug: false
+
+mode: cbm-base
+exp_name: cbm-base
+checkpoint_dir: /home/harmanan/scratch/ckpt/${data.dataset}/${mode}_fold=${data.fold}_j${slurm_job_id}
+save_weights: false
+
+pretrained: false
+pretraining:
+  data: breast
+  style: mae
+
+from_ckpt: /h/harmanan/breast_us/_checkpoint/${cbm.backbone}-${pretraining.data}-${pretraining.style}/fold${data.fold}.pth
+
+wandb:
+  name: ${exp_name}_fold=${data.fold}_slurmid=${slurm_job_id}
+  project: MedCBM
+  group: cbm_base
+  tags: 
+  log_images: true
+
+slurm:
+  qos: m3
+  mem: 48G
+  gpu: gpu:rtx6000:1
+  time: 8:00:00
+  cpus: 8
+
+data:
+  dataset: DDSM
+  data_dir: /h/harmanan/breast_us/data/${data.dataset}
+  fold: 0
+  num_folds: 5
+  splitting: kfold_patients
+  sampling: undersample
+  sampling_ratio: 1.0
+  crop_rois: false # whether to crop the images to the ROIs
+  image_size: 256
+  batch_size: 64
+  augmentations:
+    - translation
+    - rotate
+    - flip
+
+  subset_train_data: 1.0
+  use_llm_output: false
+  datasets: ["BrEaST", "BUSBRA"] # datasets to use, can be ["BrEaST", "BUSBRA", "ALL"]
+
+training:
+  num_epochs: 300
+  lr_scheduler: cosine
+  pretrained: true
+  from_ckpt: null
+  accumulate_grad_steps: 1
+
+optimizer:
+  name: adamw
+  encoder_lr: 3e-04
+  main_lr: 3e-04
+  wd: 1e-5 # weight decay
+  encoder_frozen_epochs: 0
+  encoder_warmup_epochs: 5
+  main_frozen_epochs: 0
+  main_warmup_epochs: 5
+
+cbm:
+  num_concepts: 30
+  num_birads: 6 # 0, 1, 2, 3, 4, 5
+  num_classes: 2
+  concepts: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+  backbone: resnet50
+  architecture: base
+  gamma: 2.0
+  concept_weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+metrics:
+  tune_threshold: true
+
+learning_rate: 0.001
+loss: weighted_multi_task_ce_loss
+
+device: cuda
+use_amp: false
+
+#python3 run.py -o wandb.group=new_losses_rn50_joint data.fold=1 loss=concept_weighted_ce_loss
+#python3 run.py -y cbm_base -o wandb.group=LaBo_CBM_smolGamma cbm.gamma=0.3 loss=unweighted_multi_task_ce_loss data.fold=0
