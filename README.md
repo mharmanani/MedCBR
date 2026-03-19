@@ -11,6 +11,7 @@
     <a href="#"><img src="https://img.shields.io/badge/-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+"></a>
     <a href="https://pytorch.org"><img src="https://img.shields.io/badge/-2.0%2B-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="License: MIT"></a>
+    <img src="https://komarev.com/ghpvc/?username=mharmanani&repo=medcbr&style=for-the-badge&label=visitors&color=blueviolet" alt="Visitors">
 </p>
 </div>
 
