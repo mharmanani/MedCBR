@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script>
+    const correctBase = "/MedCBR";
+    const path = location.pathname;
+
+    if (path.toLowerCase().startsWith(correctBase.toLowerCase())) {
+      const rest = path.slice(correctBase.length);
+      const canonicalPath = correctBase + rest;
+
+      if (path !== canonicalPath) {
+        location.replace(canonicalPath + location.search + location.hash);
+      } else {
+        location.replace(correctBase + "/" + location.search + location.hash);
+      }
+    } else {
+      location.replace(correctBase + "/" + location.search + location.hash);
+    }
+  </script>
+</head>
+<body></body>
+</html>
