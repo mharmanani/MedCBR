@@ -7,7 +7,7 @@
 <div>
 <p>
     <a href="https://arxiv.org/abs/2603.08921"><img src="https://img.shields.io/badge/-2603.08921-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white" alt="arXiv"></a>
-    <a href="https://mharmanani.github.io/medcbr"><img src="https://img.shields.io/badge/-Project%20Page-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Project Page"></a>
+    <a href="https://harmanani.com/MedCBR"><img src="https://img.shields.io/badge/-Project%20Page-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Project Page"></a>
     <a href="#"><img src="https://img.shields.io/badge/-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+"></a>
     <a href="https://pytorch.org"><img src="https://img.shields.io/badge/-2.0%2B-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white" alt="License: MIT"></a>
