@@ -22,8 +22,7 @@ from src.utils.metrics import show_confmat, compute_conceptwise_metrics, compute
 
 from src.utils.reproducibility import set_all_rng_states, get_all_rng_states, set_global_seed
 
-from src.models.cbm import BaseCBM, FusionCBM, TwoTrunkCBM, ProbabilisticCBM
-from src.models.cmh import BaseCMH
+from src.models.cbm import BaseCBM
 
 class CBMExperiment:
     def __init__(self, config):

@@ -32,7 +32,7 @@ from src.utils.losses import (
 )
 
 from src.utils.reproducibility import set_all_rng_states, get_all_rng_states, set_global_seed
-from src.models.biomedclip import BiomedCLIP
+from src.models.clip import BiomedCLIP
 
 class BiomedCLIPExperiment:
     def __init__(self, config):

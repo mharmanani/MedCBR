@@ -30,9 +30,7 @@ from src.models.clip import CLIPRN50, CLIPViT, CLIPViTL
 from src.utils.metrics import (
     compute_conceptwise_metrics, 
     compute_classification_metrics, 
-    compute_multiclass_metrics, 
-    compute_contrastive_accuracy,
-    calculate_closest_captions
+    compute_multiclass_metrics
 )
 
 from src.utils.concept_bank import (
@@ -349,8 +347,6 @@ class CLIPExperiment:
                     + self.config.clip.concept_weight * concept_loss
                 )
 
-                contrast_acc = compute_contrastive_accuracy(img_feats, txt_feats)
-
                 # backward pass
                 if self.config.use_amp:
                     self.gradient_scaler.scale(loss).backward()
@@ -370,7 +366,6 @@ class CLIPExperiment:
                     all_txt_feats.append(txt_feats[j, :].detach().cpu().numpy())
                     all_labels.append(y[j].detach().cpu().numpy())
                     all_concepts.append(c[j, :].detach().cpu().numpy())
-                    all_contrast_accs.append(contrast_acc)
 
             loss_per_step = np.concatenate([loss_per_step, loss.detach().cpu().item()], axis=None)
             
